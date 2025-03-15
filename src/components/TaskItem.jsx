@@ -30,3 +30,5 @@ const TaskItem = ({ task, onToggleComplete, onDelete }) => {
     </div>
   );
 };
+
+export default TaskItem;
