@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# To-Do List App Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based frontend for a To-Do List application with cross-device synchronization capability.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Add, view, update, and delete tasks
+- Task completion tracking
+- Automatic and manual synchronization across devices
+- Real-time sync status indicators
+- Clean, functional UI focused on usability
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js (v14 or later)
+- npm 
+- Backend server running (see backend README)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository
+2. Navigate to the frontend directory:
+   ```bash
+   cd todo-frontend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Set up your environment variables by creating a `.env` file in the root directory:
+   ```
+   REACT_APP_API_URL=http://localhost:3001
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Running the Application
 
-### `npm run build`
+### Development Mode
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This will start the development server and open the application in your default browser at [http://localhost:3000](http://localhost:3000).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Production Build
 
-### `npm run eject`
+```bash
+npm run build
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This creates an optimized production build in the `build` folder that you can serve with a static server.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+src/
+├── components/             # React components
+│   ├── TaskForm.jsx        # Form for adding new tasks
+│   ├── TaskItem.jsx        # Individual task component
+│   └── TaskList.jsx        # List of tasks
+├── services/               # API services
+│   └── TaskService.js      # Task API integration
+├── App.js                  # Main application component
+└── index.js                # Entry point
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Environment Variables
 
-## Learn More
+| Variable           | Description                    | Default               |
+|--------------------|--------------------------------|-----------------------|
+| REACT_APP_API_URL  | URL of the backend API server  | http://localhost:3001 |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Understanding the Environment Variables
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The `REACT_APP_API_URL` environment variable defines the base URL for all API calls to the backend. This configuration allows:
 
-### Code Splitting
+1. **Easy environment switching**: You can point to different backend environments (dev, staging, prod) by changing this single variable.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. **Consistent API access**: The TaskService uses this variable to construct API endpoints:
+   ```javascript
+   const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+   ```
 
-### Analyzing the Bundle Size
+3. **Deployment flexibility**: When deploying to production, you can set this variable to your production API URL without changing any code.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Cross-device Synchronization
 
-### Making a Progressive Web App
+The application supports seamless synchronization across multiple devices:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. **Automatic synchronization**: The app polls the backend every 60 seconds to fetch the latest tasks.
+2. **Manual synchronization**: Users can manually trigger a sync by clicking the "Sync now" button.
+3. **Visual feedback**: The sync status indicator shows whether tasks are:
+   - Synced: All changes are saved and up to date
+   - Syncing: Currently retrieving or sending updates
+   - Error: A sync operation failed
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
